@@ -29,3 +29,5 @@
     "mongoPath": "mongodb://localhost:27017/discordbot"
 }
 ```
+
+This is a fork of SafeMoon's bot which will run for Hope.

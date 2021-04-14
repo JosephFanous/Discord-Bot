@@ -2,7 +2,7 @@
 const { Client, Message } = require('discord.js')
 const config = require('./config.json')
 const axios = require('axios').default
-const contractAddress = "0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3" //SAFEMOON Contract Address
+const contractAddress = "0x6f2afbf4f5e5e804c5b954889d7bf3768a3c9a45" //HOPE Contract Address
 
 //Create an instance of client
 const client = new Client()
@@ -168,14 +168,14 @@ async function postEmbeded(channelId) {
                 "color": 2029249,
                 "timestamp": timeStamp,
                 "footer": {
-                    "text": "SafeMoon Price Bot - Values based on USD."
+                    "text": "Hope Price Bot - Values based on USD."
                 },
                 "thumbnail": {
                     "url": "https://i.imgur.com/cAjC1Pz.png"
                 },
                 "author": {
-                    "name": "SafeMoon Price Bot",
-                    "url": "https://safemoon.net"
+                    "name": "Hope Price Bot",
+                    "url": "https://hope-token.com/"
                 },
                 "fields": [
                     {
