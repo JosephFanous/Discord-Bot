@@ -38,7 +38,7 @@ client.on('ready', async () => {
      * Price Command.
      */
     command(client, ['price'], (message) => {
-        postPrice(message.channel.id)
+        postEmbeded(message.channel.id)
     })
 });
 
@@ -78,7 +78,7 @@ async function getBurnedTotal() {
     try {
         let response = await axios.get('https://api.bscscan.com/api?module=account&action=tokenbalance&contractaddress=0x8076C74C5e3F5852037F31Ff0093Eeb8c8ADd8D3&address=0x0000000000000000000000000000000000000001&tag=latest&apikey=YOUR_API_KEY_GOES_HERE');
         let value = response.data['result']
-        value = (value / 1_000_000_000_000_000_000_000).toFixed(4)
+        value = (value / 1000000000000000000000).toFixed(4)
         return value
     } catch (err) {
         console.log(err)
@@ -108,7 +108,7 @@ async function getPrice() {
     try {
         let dexGuruData = await getApi()
         price = dexGuruData['priceUSD']
-        price *= Math.pow(10, 10)
+        //price *= Math.pow(10, 10)
         return price.toPrecision(6)
     } catch (err) {
         console.log(err)
@@ -125,7 +125,7 @@ async function postPrice(channelId) {
         let price = await getPrice()
         let channel = client.channels.cache.get(channelId)
         if (price > 0) {
-            let emoji = price > previousPrice ? "<:GreenSafu:828471113754869770>" : "<:RedSafu:828471096734908467>"
+            let emoji = price > previousPrice ? "<:GreenSafu:832113912446582844>" : "<:RedSafu:832114021271863297>"
             await channel.send(emoji + " " + price)
             previousPrice = price
         }
@@ -144,7 +144,7 @@ async function postEmbeded(channelId) {
     try {
         let dexGuruData = await getApi()
         let price = dexGuruData['priceUSD'].toFixed(dexGuruData['decimals'])
-        let volume = (dexGuruData['volume24hUSD'] / 1_000_000).toFixed(4)
+        let volume = (dexGuruData['volume24hUSD'] / 1000000).toFixed(4)
         let channel = client.channels.cache.get(channelId)
 
         let burnTotal = await getBurnedTotal()
@@ -154,7 +154,7 @@ async function postEmbeded(channelId) {
         let cmcBase = cmcData.data[8757]
         let cmcQuote = cmcBase['quote']['USD']
         let circ_supply = 1000 - burnTotal
-        let marketCap = (circ_supply * 1_000_000 * price).toFixed(4)
+        let marketCap = (circ_supply * 1000000 * price).toFixed(4)
 
         let change1h = cmcQuote['percent_change_1h'].toFixed(4)
         let change24h = cmcQuote['percent_change_24h'].toFixed(4)
