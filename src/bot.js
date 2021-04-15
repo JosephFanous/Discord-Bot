@@ -164,9 +164,9 @@ async function postEmbeded(channelId) {
         await channel.send({
             embed: {
                 "title": "**" + contractAddress + "**",
-                "description": "This bot will automatically post new stats every 1 minutes.",
+                "description": "This bot will automatically post new stats every 5 minutes.",
                 "url": "https://bscscan.com/address/" + contractAddress,
-                "color": 2029249,
+                "color": 1752220,
                 "timestamp": timeStamp,
                 "footer": {
                     "text": "Hope Price Bot - Values based on USD."
@@ -185,15 +185,15 @@ async function postEmbeded(channelId) {
                         "inline": true
                     },
                     {
-                        "name": "🧊 Volume",
-                        "value": "$" + volume ,
+                        "name": "🧊 24h Volume",
+                        "value": "$" + volume,
                         "inline": true
                     },
-                    {
-                        "name": "💰 Market Cap",
-                        "value": marketCap + "M",
-                        "inline": true
-                    },
+                  //  {
+                  //      "name": "💰 Market Cap",
+                  //      "value": marketCap + "M",
+                  //      "inline": true
+                  //  },
                     {
                         "name": "🏦 Total Supply",
                         "value": "1,000,000,000",
