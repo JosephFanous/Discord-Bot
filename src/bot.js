@@ -76,7 +76,7 @@ async function getApi() {
  */
 async function getBurnedTotal() {
     try {
-        let response = await axios.get('https://api.bscscan.com/api?module=account&action=tokenbalance&contractaddress=0x8076C74C5e3F5852037F31Ff0093Eeb8c8ADd8D3&address=0x0000000000000000000000000000000000000001&tag=latest&apikey=YOUR_API_KEY_GOES_HERE');
+        let response = await axios.get('https://api.bscscan.com/api?module=account&action=tokenbalance&contractaddress=0x8076C74C5e3F5852037F31Ff0093Eeb8c8ADd8D3&address=0x0000000000000000000000000000000000000001&tag=latest&apikey=AVFWTJ6HTDDSDMH4MNTNSP2GG7UCXDX8NH');
         let value = response.data['result']
         value = (value / 1000000000000000000000).toFixed(4)
         return value
@@ -143,17 +143,18 @@ module.exports.postPrice = postPrice
 async function postEmbeded(channelId) {
     try {
         let dexGuruData = await getApi()
-        let price = dexGuruData['priceUSD'].toFixed(dexGuruData['decimals'])
-        let volume = (dexGuruData['volume24hUSD'] / 1000000).toFixed(4)
+        let price = dexGuruData['priceUSD'].toFixed(7)
+        // let price = dexGuruData['priceUSD'].toFixed(dexGuruData['decimals'])
+        let volume = (dexGuruData['volume24hUSD']).toFixed(5)
         let channel = client.channels.cache.get(channelId)
 
-        let burnTotal = await getBurnedTotal()
+        let burnTotal = '18,655,328'
         let timeStamp = Date.now()
 
         let cmcData = await getCMCData()
         let cmcBase = cmcData.data[8757]
         let cmcQuote = cmcBase['quote']['USD']
-        let circ_supply = 1000 - burnTotal
+        let circ_supply = "981,344,672"
         let marketCap = (circ_supply * 1000000 * price).toFixed(4)
 
         let change1h = cmcQuote['percent_change_1h'].toFixed(4)
@@ -163,7 +164,7 @@ async function postEmbeded(channelId) {
         await channel.send({
             embed: {
                 "title": "**" + contractAddress + "**",
-                "description": "This bot will automatically post new stats every 5 minutes.",
+                "description": "This bot will automatically post new stats every 1 minutes.",
                 "url": "https://bscscan.com/address/" + contractAddress,
                 "color": 2029249,
                 "timestamp": timeStamp,
@@ -171,7 +172,7 @@ async function postEmbeded(channelId) {
                     "text": "Hope Price Bot - Values based on USD."
                 },
                 "thumbnail": {
-                    "url": "https://i.imgur.com/cAjC1Pz.png"
+                    "url": "https://i.imgur.com/T04xTWl.jpg"
                 },
                 "author": {
                     "name": "Hope Price Bot",
@@ -185,7 +186,7 @@ async function postEmbeded(channelId) {
                     },
                     {
                         "name": "🧊 Volume",
-                        "value": "$" + volume + "M",
+                        "value": "$" + volume ,
                         "inline": true
                     },
                     {
@@ -195,34 +196,34 @@ async function postEmbeded(channelId) {
                     },
                     {
                         "name": "🏦 Total Supply",
-                        "value": "1000T",
+                        "value": "1,000,000,000",
                         "inline": true
                     },
                     {
                         "name": "🔥 Total Burned",
-                        "value": burnTotal + "T",
+                        "value": burnTotal,
                         "inline": true
                     },
                     {
                         "name": "💱 Circ Supply",
-                        "value": circ_supply.toFixed(2) + "T",
+                        "value": circ_supply,
                         "inline": true
                     },
-                    {
-                        "name": "💯 1hr Change",
-                        "value": change1h > 0 ? "⬆️ " + change1h + "%" : "⬇️ " + change1h + "%",
-                        "inline": true
-                    },
-                    {
-                        "name": "📈 24hr Change",
-                        "value": change24h > 0 ? "⬆️ " + change24h + "%" : "⬇️ " + change24h + "%",
-                        "inline": true
-                    },
-                    {
-                        "name": "📈 7D Change",
-                        "value": change7d > 0 ? "⬆️ " + change7d + "%" : "⬇️ " + change7d + "%",
-                        "inline": true
-                    }
+                   // {
+                   //     "name": "💯 1hr Change",
+                   //     "value": change1h > 0 ? "⬆️ " + change1h + "%" : "⬇️ " + change1h + "%",
+                   //     "inline": true
+                   // },
+                   // {
+                   //     "name": "📈 24hr Change",
+                   //     "value": change24h > 0 ? "⬆️ " + change24h + "%" : "⬇️ " + change24h + "%",
+                   //     "inline": true
+                   // },
+                   // {
+                   //     "name": "📈 7D Change",
+                   //     "value": change7d > 0 ? "⬆️ " + change7d + "%" : "⬇️ " + change7d + "%",
+                   //     "inline": true
+                   // }
                 ]
             }
         });
